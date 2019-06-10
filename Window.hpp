@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 14:18:39 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 14:37:01 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ class Window {
     Screen* _objects[50];
     Screen* _bullets[500];
     SpaceShip _ship;
-    int input;
+    int _key;
     int _prevInput;
     int _score;
     unsigned long timeInterval;

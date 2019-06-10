@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 12:53:46 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 14:25:32 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 14:38:58 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #include <cstdlib>
 #include <iostream>
 
-Window::Window() : _ship(SpaceShip()), input(ERR), _prevInput(ERR), timeInterval(0), HEIGHT(WINHEIGHT), WIDTH(WINWIDTH), POS_X(WINDOW_STARTX), POS_Y(WINDOW_STARTY) {
+Window::Window() : _ship(SpaceShip()), _key(ERR), _prevInput(ERR), timeInterval(0), HEIGHT(WINHEIGHT), WIDTH(WINWIDTH), POS_X(WINDOW_STARTX), POS_Y(WINDOW_STARTY) {
     init();
 }
 
-Window::Window(Window const& src) : _ship(SpaceShip()), input(ERR), _prevInput(ERR), HEIGHT(WINHEIGHT), WIDTH(WINWIDTH), POS_X(WINDOW_STARTX), POS_Y(WINDOW_STARTY) {
+Window::Window(Window const& src) : _ship(SpaceShip()), _key(ERR), _prevInput(ERR), HEIGHT(WINHEIGHT), WIDTH(WINWIDTH), POS_X(WINDOW_STARTX), POS_Y(WINDOW_STARTY) {
     init();
     *this = src;
 }
@@ -33,7 +33,7 @@ Window::~Window() {
 
 Window const& Window::operator=(Window const& rhs) {
     if (this != &rhs) {
-        this->input = rhs.input;
+        this->_key = rhs._key;
         this->_prevInput = rhs._prevInput;
         this->start = rhs.start;
         this->now = rhs.now;
@@ -55,10 +55,20 @@ void Window::destroyWindow() {
     delwin(_win);
 }
 
+void Window::shoot(int y) {
+    int i;
+    for (i = 0; i < 500; i++) {
+        if (_bullets[i] == NULL) {
+            _bullets[i] = new Bullet(POS_X + 6, y);
+            return;
+        }
+    }
+}
+
 void Window::moveObjects(int const input) {
     _ship.move(input, timeInterval);
     if (input == 32) {
-        // shoot(_ship.getY());
+        shoot(_ship.getY());
     }
     for (int i = 0; i < 50; ++i) {
         if (_objects[i]) {
@@ -93,6 +103,14 @@ void Window::printScreen() {
     mvprintw(4, 20, "%d", _ship.life);
     mvprintw(4, 15, "LIVES");
     _ship.printObject();
+    for (int i = 0; i < 50; ++i) {
+        if (_objects[i])
+            _objects[i]->printObject();
+    }
+    for (int i = 0; i < 500; ++i) {
+        if (_bullets[i])
+            _bullets[i]->printObject();
+    }
 }
 
 void Window::initArray() {
@@ -139,11 +157,11 @@ unsigned int Window::timeDifference(timeval t1, timeval t2) {
 
 void Window::play() {
     _score = 0;
-    input = getch();
-    while (input != 27) {
-        input = getch();
-        if (input != ERR)
-            _prevInput = input;
+    _key = getch();
+    while (_key != 27) {
+        _key = getch();
+        if (_key != ERR)
+            _prevInput = _key;
         gettimeofday(&now, NULL);
         if (timeDifference(start, now) >= (1000000 / 24)) {
             destroyWindow();
