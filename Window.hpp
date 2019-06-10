@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 13:03:38 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 13:17:26 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ class Window {
     void play();
 
    private:
+    Screen* _objects[50];
+    Screen* _bullets[500];
     SpaceShip _ship;
     int input;
     int _prevInput;
@@ -51,7 +53,7 @@ class Window {
     void init();
     void printScreen();
     void initArray();
-    void initArray2();
+    void initBullets();
     void initEnemy();
     void initBullets();
     void init_enemyBullets();

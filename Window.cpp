@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 12:53:46 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 12:53:48 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 13:17:26 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,20 @@ void Window::destroyWindow() {
     delwin(_win);
 }
 
+void Window::initArray() {
+    for (int i = 0; i < 50; ++i) {
+        if (_objects[i])
+            _objects[i] = NULL;
+    }
+}
+
+void Window::initBullets() {
+    for (int i = 0; i < 500; ++i) {
+        if (_bullets[i])
+            _bullets[i] = NULL;
+    }
+}
+
 void Window::printScreen() {
     mvprintw(4, 5, "SCORE ");
     mvprintw(4, 12, "%d", _score);
@@ -62,9 +76,15 @@ void Window::printScreen() {
     mvprintw(4, 20, "%d", _ship.life);
     mvprintw(4, 15, "LIVES");
     _ship.printObject();
+    for (int i = 0; i < 50; ++i) {
+        if (_objects[i])
+            _objects[i]->printObject();
+    }
 }
 
 void Window::init() {
+    initArray();
+    initscr();
     noecho();
     curs_set(false);
     timeout(0);

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:17 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 13:03:19 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 13:15:34 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include "Window.hpp"
 
 SpaceShip::SpaceShip(void) : Screen() {
-    _player = '}';
+    _player = 'E';
     life = 3;
 }
 
 SpaceShip::SpaceShip(int x, int y) : Screen(x, y) {
-    _player = '}';
+    _player = 'E';
     life = 3;
 }
 
