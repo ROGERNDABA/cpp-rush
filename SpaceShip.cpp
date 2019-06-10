@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:17 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 13:15:34 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 14:14:40 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,17 @@
 #include <ncurses.h>
 #include "Window.hpp"
 
-SpaceShip::SpaceShip(void) : Screen() {
+SpaceShip::SpaceShip(void) : Screen(), life(3) {
     _player = 'E';
-    life = 3;
 }
 
-SpaceShip::SpaceShip(int x, int y) : Screen(x, y) {
+SpaceShip::SpaceShip(int x, int y) : Screen(x, y), life(3) {
     _player = 'E';
-    life = 3;
 }
 
-SpaceShip::SpaceShip(SpaceShip const& src) : Screen(src.getX(), src.getY()) {
-}
+SpaceShip::SpaceShip(SpaceShip const& src) : Screen(src.getX(), src.getY()) {}
 
-SpaceShip::~SpaceShip(void) {
-}
+SpaceShip::~SpaceShip(void) {}
 
 bool SpaceShip::move(int timeInterval) {
     if (timeInterval == 0)
@@ -36,11 +32,11 @@ bool SpaceShip::move(int timeInterval) {
     return 0;
 }
 
-void SpaceShip::move(int const input, int timeInterval) {
+void SpaceShip::move(int const key, int timeInterval) {
     if (timeInterval) {
-        if (input == KEY_UP && _y > (WINDOW_STARTY + 1))
+        if (key == KEY_UP && _y > (WINDOW_STARTY + 1))
             _y--;
-        else if (input == KEY_DOWN && _y < (WINDOW_STARTY + WINHEIGHT - 2))
+        else if (key == KEY_DOWN && _y < (WINDOW_STARTY + WINHEIGHT - 2))
             _y++;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 12:53:46 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 13:27:07 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 14:25:32 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,34 @@ void Window::destroyWindow() {
     delwin(_win);
 }
 
-void Window::initArray() {
-    for (int i = 0; i < 50; ++i) {
-        if (_objects[i])
-            _objects[i] = NULL;
+void Window::moveObjects(int const input) {
+    _ship.move(input, timeInterval);
+    if (input == 32) {
+        // shoot(_ship.getY());
     }
-}
-
-void Window::initAllBullets() {
+    for (int i = 0; i < 50; ++i) {
+        if (_objects[i]) {
+            if (!_objects[i]->move(timeInterval)) {
+                delete _objects[i];
+                _objects[i] = NULL;
+            }
+        }
+    }
+    for (int i = 0; i < 50; ++i) {
+        if (_objects[i]) {
+            if (_objects[i] != NULL) {
+                if ((rand() % 125) == 1)
+                    (_objects[i]->getX(), _objects[i]->getY());
+            }
+        }
+    }
     for (int i = 0; i < 500; ++i) {
-        if (_bullets[i])
-            _bullets[i] = NULL;
+        if (_bullets[i]) {
+            if (!_bullets[i]->move(timeInterval)) {
+                delete _bullets[i];
+                _bullets[i] = NULL;
+            }
+        }
     }
 }
 
@@ -76,23 +93,33 @@ void Window::printScreen() {
     mvprintw(4, 20, "%d", _ship.life);
     mvprintw(4, 15, "LIVES");
     _ship.printObject();
-    for (int i = 0; i < 50; ++i) {
-        if (_objects[i])
-            _objects[i]->printObject();
-    }
 }
 
-void Window::moveObjects(int const input) {
-    _ship.move(input, timeInterval);
-    // if (input == 32) {
-    //     // shoot(_ship.getY());
-    // }
+void Window::initArray() {
+    for (int i = 0; i < 50; ++i) {
+        if (_objects[i])
+            _objects[i] = NULL;
+    }
+}
+void Window::initBullets() {
+    for (int i = 0; i < 500; ++i)
+        _objects[i] = new Bullet();
+}
+
+void Window::initAllBullets() {
+    for (int i = 0; i < 500; ++i) {
+        if (_bullets[i])
+            _bullets[i] = NULL;
+        // if (_enemyBullets[i])
+        //     _enemyBullets[i] = NULL;
+    }
 }
 
 void Window::init() {
     initArray();
     initscr();
     noecho();
+    initAllBullets();
     curs_set(false);
     timeout(0);
     cbreak();
@@ -104,8 +131,10 @@ void Window::init() {
     printScreen();
 }
 
-unsigned int Window::timeDiff(timeval t1, timeval t2) {
-    return ((t2.tv_sec * 1000000 + t2.tv_usec) - (t1.tv_sec * 1000000 + t1.tv_usec));
+unsigned int Window::timeDifference(timeval t1, timeval t2) {
+    int startTime = (t1.tv_sec * 1000000 + t1.tv_usec);
+    int endTime = (t2.tv_sec * 1000000 + t2.tv_usec);
+    return (endTime - startTime);
 }
 
 void Window::play() {
@@ -113,11 +142,10 @@ void Window::play() {
     input = getch();
     while (input != 27) {
         input = getch();
-        if (input != ERR) {
+        if (input != ERR)
             _prevInput = input;
-        }
         gettimeofday(&now, NULL);
-        if (timeDiff(start, now) >= (1000000 / 24)) {
+        if (timeDifference(start, now) >= (1000000 / 24)) {
             destroyWindow();
             createWindow();
             moveObjects(_prevInput);

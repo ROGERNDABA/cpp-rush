@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 13:26:28 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 14:18:39 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 #include <ncurses.h>
 #include <sys/time.h>
+#include "Bullet.hpp"
 #include "SpaceShip.hpp"
-
 class Window {
    public:
     Window();
@@ -57,11 +57,11 @@ class Window {
     void initEnemy();
     void initAllBullets();
     void init_enemyBullets();
-    void shoot(int y);
-    void shootEnemy(int x, int y);
-    void createEnemy(int timeInterval);
+    void shoot(int);
+    void shootEnemy(int, int);
+    void createEnemy(int);
     void moveObjects(int const input);
-    unsigned int timeDiff(timeval t1, timeval t2);
+    unsigned int timeDifference(timeval, timeval);
     int collide();
 };
 
