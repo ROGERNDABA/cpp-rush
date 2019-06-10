@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 13:17:26 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 13:26:28 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ class Window {
     void initArray();
     void initBullets();
     void initEnemy();
-    void initBullets();
+    void initAllBullets();
     void init_enemyBullets();
     void shoot(int y);
     void shootEnemy(int x, int y);

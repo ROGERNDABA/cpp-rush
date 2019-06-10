@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 12:53:46 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 13:17:26 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 13:27:07 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void Window::initArray() {
     }
 }
 
-void Window::initBullets() {
+void Window::initAllBullets() {
     for (int i = 0; i < 500; ++i) {
         if (_bullets[i])
             _bullets[i] = NULL;
@@ -80,6 +80,13 @@ void Window::printScreen() {
         if (_objects[i])
             _objects[i]->printObject();
     }
+}
+
+void Window::moveObjects(int const input) {
+    _ship.move(input, timeInterval);
+    // if (input == 32) {
+    //     // shoot(_ship.getY());
+    // }
 }
 
 void Window::init() {
@@ -113,6 +120,7 @@ void Window::play() {
         if (timeDiff(start, now) >= (1000000 / 24)) {
             destroyWindow();
             createWindow();
+            moveObjects(_prevInput);
             printScreen();
             _prevInput = ERR;
             start = now;
