@@ -6,14 +6,13 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 12:53:46 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 14:38:58 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 15:02:45 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Window.hpp"
 #include <ncurses.h>
 #include <sys/time.h>
-#include <cstdlib>
 #include <iostream>
 
 Window::Window() : _ship(SpaceShip()), _key(ERR), _prevInput(ERR), timeInterval(0), HEIGHT(WINHEIGHT), WIDTH(WINWIDTH), POS_X(WINDOW_STARTX), POS_Y(WINDOW_STARTY) {
@@ -132,6 +131,17 @@ void Window::initAllBullets() {
         //     _enemyBullets[i] = NULL;
     }
 }
+void Window::createEnemy(int timeInterval) {
+    if (timeInterval % 20 == 0) {
+        int y = (rand() % 18) + 6;
+        for (int i = 0; i < 500; ++i) {
+            if (!_objects[i]) {
+                _objects[i] = new Enemy(WIDTH + WINDOW_STARTX - 1, y);
+                return;
+            }
+        }
+    }
+}
 
 void Window::init() {
     initArray();
@@ -166,6 +176,7 @@ void Window::play() {
         if (timeDifference(start, now) >= (1000000 / 24)) {
             destroyWindow();
             createWindow();
+            createEnemy(timeInterval);
             moveObjects(_prevInput);
             printScreen();
             _prevInput = ERR;

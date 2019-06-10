@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.hpp                                          :+:      :+:    :+:   */
+/*   EnemyBullet.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 14:43:18 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 15:01:47 by Roger Ndaba      ###   ########.fr       */
+/*   Created: 2019/06/10 15:06:45 by Roger Ndaba       #+#    #+#             */
+/*   Updated: 2019/06/10 15:06:46 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cstdlib>
 #include <iostream>
 #include "Screen.hpp"
 
-#ifndef ENEMY_HPP
-#define ENEMY_HPP
+#ifndef Enemy_Bullet_HPP
+#define Enemy_Bullet_HPP
 
-class Enemy : public Screen {
+class EnemyBullet : public Screen {
    public:
-    Enemy(void);
-    Enemy(int, int);
-    Enemy(Enemy const& src);
-    ~Enemy();
+    EnemyBullet(void);
+    EnemyBullet(int x, int y);
+    EnemyBullet(EnemyBullet const& src);
+    ~EnemyBullet();
     using Screen::operator=;
     bool move(int);
+    bool colision(Screen const& elem);
 };
 
 #endif

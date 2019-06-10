@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 14:37:01 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 15:01:24 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <ncurses.h>
 #include <sys/time.h>
 #include "Bullet.hpp"
+#include "Enemy.hpp"
 #include "SpaceShip.hpp"
 class Window {
    public:
