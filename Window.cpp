@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 12:53:46 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 15:02:45 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 15:52:27 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 #include <iostream>
 
 Window::Window() : _ship(SpaceShip()), _key(ERR), _prevInput(ERR), timeInterval(0), HEIGHT(WINHEIGHT), WIDTH(WINWIDTH), POS_X(WINDOW_STARTX), POS_Y(WINDOW_STARTY) {
-    init();
+    initGame();
 }
 
-Window::Window(Window const& src) : _ship(SpaceShip()), _key(ERR), _prevInput(ERR), HEIGHT(WINHEIGHT), WIDTH(WINWIDTH), POS_X(WINDOW_STARTX), POS_Y(WINDOW_STARTY) {
-    init();
-    *this = src;
+Window::Window(Window const& copy) : _ship(SpaceShip()), _key(ERR), _prevInput(ERR), HEIGHT(WINHEIGHT), WIDTH(WINWIDTH), POS_X(WINDOW_STARTX), POS_Y(WINDOW_STARTY) {
+    initGame();
+    *this = copy;
 }
 
 Window::~Window() {
     destroyWindow();
     endwin();
-    std::cout << "* GAME OVER *" << std::endl;
+    std::cout << "<------------DOOD------------>" << std::endl;
 }
 
 Window const& Window::operator=(Window const& rhs) {
@@ -47,8 +47,6 @@ void Window::createWindow() {
 }
 
 void Window::destroyWindow() {
-    wborder(_win, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-    wrefresh(_win);
     clear();
     refresh();
     delwin(_win);
@@ -64,6 +62,32 @@ void Window::shoot(int y) {
     }
 }
 
+int Window::collisionDetected() {
+    for (int i = 0; i < 50; ++i) {
+        if (_objects[i] && _ship.colision(_objects[i]))
+            _ship.life--;
+        if (_ship.life < 0)
+            return (1);
+    }
+    for (int i = 0; i < 500; ++i) {
+        if (_ship.life < 0)
+            return (1);
+    }
+
+    for (int j = 0; j < 500; ++j) {
+        for (int k = 0; (k < 50 && _bullets[j]); ++k) {
+            if (_objects[k] && _bullets[j]->colision(_objects[k])) {
+                delete _bullets[j];
+                _bullets[j] = NULL;
+                delete _objects[k];
+                _objects[k] = NULL;
+                _score += 5;
+            }
+        }
+    }
+    return (0);
+}
+
 void Window::moveObjects(int const input) {
     _ship.move(input, timeInterval);
     if (input == 32) {
@@ -77,14 +101,6 @@ void Window::moveObjects(int const input) {
             }
         }
     }
-    for (int i = 0; i < 50; ++i) {
-        if (_objects[i]) {
-            if (_objects[i] != NULL) {
-                if ((rand() % 125) == 1)
-                    (_objects[i]->getX(), _objects[i]->getY());
-            }
-        }
-    }
     for (int i = 0; i < 500; ++i) {
         if (_bullets[i]) {
             if (!_bullets[i]->move(timeInterval)) {
@@ -95,7 +111,7 @@ void Window::moveObjects(int const input) {
     }
 }
 
-void Window::printScreen() {
+void Window::display() {
     mvprintw(4, 5, "SCORE ");
     mvprintw(4, 12, "%d", _score);
 
@@ -127,8 +143,6 @@ void Window::initAllBullets() {
     for (int i = 0; i < 500; ++i) {
         if (_bullets[i])
             _bullets[i] = NULL;
-        // if (_enemyBullets[i])
-        //     _enemyBullets[i] = NULL;
     }
 }
 void Window::createEnemy(int timeInterval) {
@@ -143,10 +157,10 @@ void Window::createEnemy(int timeInterval) {
     }
 }
 
-void Window::init() {
-    initArray();
+void Window::initGame() {
     initscr();
     noecho();
+    initArray();
     initAllBullets();
     curs_set(false);
     timeout(0);
@@ -156,7 +170,7 @@ void Window::init() {
     gettimeofday(&start, NULL);
     refresh();
     createWindow();
-    printScreen();
+    display();
 }
 
 unsigned int Window::timeDifference(timeval t1, timeval t2) {
@@ -178,7 +192,9 @@ void Window::play() {
             createWindow();
             createEnemy(timeInterval);
             moveObjects(_prevInput);
-            printScreen();
+            display();
+            if (collisionDetected())
+                return;
             _prevInput = ERR;
             start = now;
             timeInterval++;

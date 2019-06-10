@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 15:01:24 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 15:52:45 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,18 @@ class Window {
     const int POS_X;
     const int POS_Y;
 
-    void init();
-    void printScreen();
+    void initGame();
+    void display();
     void initArray();
     void initBullets();
     void initEnemy();
     void initAllBullets();
-    void init_enemyBullets();
     void shoot(int);
     void shootEnemy(int, int);
     void createEnemy(int);
     void moveObjects(int const input);
     unsigned int timeDifference(timeval, timeval);
-    int collide();
+    int collisionDetected();
 };
 
 #endif

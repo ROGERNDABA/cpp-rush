@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:17 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 14:14:40 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 15:14:50 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ SpaceShip::SpaceShip(int x, int y) : Screen(x, y), life(3) {
     _player = 'E';
 }
 
-SpaceShip::SpaceShip(SpaceShip const& src) : Screen(src.getX(), src.getY()) {}
+SpaceShip::SpaceShip(SpaceShip const& copy) : Screen(copy.getX(), copy.getY()) {}
 
 SpaceShip::~SpaceShip(void) {}
 

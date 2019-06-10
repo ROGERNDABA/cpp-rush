@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:03:02 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 13:03:03 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 15:14:36 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Screen::Screen(void) : _x(10), _y(10), _player(' ') {}
 
 Screen::Screen(int x, int y) : _x(x), _y(y), _player(' ') {}
 
-Screen::Screen(Screen const& src) : _x(src._x), _y(src._y), _player(src._player) {}
+Screen::Screen(Screen const& copy) : _x(copy._x), _y(copy._y), _player(copy._player) {}
 
 Screen::~Screen(void) {}
 
