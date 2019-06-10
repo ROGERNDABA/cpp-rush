@@ -6,7 +6,7 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/10 15:55:44 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/06/10 16:31:41 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/06/10 16:40:38 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ $(NAME): $(OBJ)
 	@printf "\e[1;32mCompiled successfully\e[0m\n"
 
 %.o: %.cpp
-	@$(CC) $(CXXFLAGS) -o $@ -c $<
+	@$(CC) $(CXXFLAGS) -o $(NAME) -c $<
 
 clean:
 	@rm -rf $(OBJ)
