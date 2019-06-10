@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:43:08 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/10 14:43:10 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/10 14:46:56 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include <ncurses.h>
 
 Enemy::Enemy(void) : Screen() {
-    char form[2] = {'K', 'Q'};
-    _player = form[rand() % 2];
+    char enemy_type[3] = {'@', '#', '$'};
+    _player = enemy_type[rand() % 3];
 }
 
 Enemy::Enemy(int x, int y) : Screen(x, y) {
-    char form[2] = {'K', 'Q'};
-    _player = form[rand() % 2];
+    char enemy_type[3] = {'@', '#', '$'};
+    _player = enemy_type[rand() % 3];
 }
 
 Enemy::Enemy(Enemy const& src) : Screen(src.getX(), src.getY()) {
